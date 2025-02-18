@@ -50,7 +50,13 @@
    python manage.py migrate
    ```
 
-6. **Start the Development Server**:
+6. **Collect Static Files**:
+
+   ```bash
+   python manage.py collectstatic
+   ```
+
+7. **Start the Development Server**:
 
    ```bash
    uvicorn renthome.asgi:application --host 127.0.0.1 --port 8000 --reload

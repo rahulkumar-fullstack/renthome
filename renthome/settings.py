@@ -46,6 +46,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "renthome.urls"
@@ -118,14 +119,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
-# Path to the static files directory
-STATICFILES_DIR = BASE_DIR / "static"
+# If you're using a custom directory for static files, add it here
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Adjust as necessary
+]
+
+# Whitenoise will automatically serve static files from the directory defined in STATIC_ROOT
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# This setting enables Whitenoise to compress and cache static files
+WHITENOISE_AUTOREFRESH = True  # For development, it can be set to True
 
 # Path to the media files directory
 MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "media"
+MEDIA_URL = "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
