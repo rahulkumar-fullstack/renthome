@@ -32,6 +32,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.core",
+    "apps.send_email",
+    "apps.owner",
+    "apps.user",
 ]
 
 MIDDLEWARE = [
@@ -121,6 +125,7 @@ STATICFILES_DIR = BASE_DIR / "static"
 
 # Path to the media files directory
 MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
