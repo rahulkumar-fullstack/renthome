@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+<!--Page title-->
+{% block title %} Privacy Policy |{% endblock title %}
+
+{% load static %}
+{% block custom_css %} 
+<link href="{% static "core/css/privacy_policy.css" %}" rel="stylesheet">
+{% endblock custom_css %}
+
+{% block main %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">Privacy Policy</h1>
+            <div class="card-deck">
+                <div class="card mb-4" data-aos="fade-up">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 1</h5>
+                        <p class="card-text">We collect personal information that you provide to us directly.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 2</h5>
+                        <p class="card-text">We use your information to provide, maintain, and improve our services.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 3</h5>
+                        <p class="card-text">We do not share your personal information with third parties without your consent.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 4</h5>
+                        <p class="card-text">We may use cookies to enhance your experience on our website.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 5</h5>
+                        <p class="card-text">You have the right to access and update your personal information.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 6</h5>
+                        <p class="card-text">We use Stripe for secure payment processing.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="card-body">
+                        <h5 class="card-title">Policy 7</h5>
+                        <p class="card-text">We send email notifications for important updates and transactions.</p>
+                    </div>
+                </div>
+                <!-- Add more cards as needed -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

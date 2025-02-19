@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+<!--Page title-->
+{% block title %} Login |{% endblock title %}
+
+<!--body without navbar and footer-->
+{% block body %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="px-3 w-100" style="max-width: 576px">
+
+        <div class="shadow-sm rounded-3 bg-white border border-2 p-2 p-md-3">
+
+            <h1 class="text-center my-4 fs-2 fw-bold text-primary text-head">Login to RentHome</h1>
+
+            <!--Success message if user account created-->
+            {% if success %}
+            <div class="alert alert-success alert-dismissible fade show fw-semibold my-4" role="alert">
+                {{success}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <form method="POST" id="form" class="px-2 py-3">
+                {% csrf_token %}
+                <!--email or phone input-->
+                <div class="form-floating mb-3 mb-md-4">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" />
+                    <label for="email" class="form-label">Email</label>
+                    <div id="emailError" class="text-danger mb-2 fw-semibold"></div>
+                </div>
+
+                <!--password input-->
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                    <label for="password" class="form-label">Password</label>
+                    <div id="passwordError" class="text-danger mb-2 fw-semibold"></div>
+                </div>
+
+                <!--show password and forgot password-->
+                <div class=" d-flex justify-content-between flex-row px-1  mb-3 mb-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input me-1" type="checkbox" id="showpass">
+                        <label class="form-check-label" for="showpass">show password</label>
+                    </div>
+                    <a href="{% url 'forgot-password' %}" class="fw-semibold no-line">forgot password?</a>
+                </div>
+
+                <div class="text-danger mb-2 fw-semibold text-center" id="msg">{{msg}}</div>
+
+                <div class="text-center pt-3">
+                    <button type="submit" id="submit" class="btn btn-primary w-100 fs-5 text-head">Login</button>
+                </div>
+            </form>
+            <div class="text-center mb-2">
+                Don't have account?
+                <a href="{% url 'user-type' %}" class="fw-semibold no-line">Register now</a>
+            </div>
+            <div class="text-center mb-2">
+                <a href="/" class="fw-semibold no-line">Go to Home</a>
+            </div>
+        </div>
+
+        <div class="text-center py-1">
+            <a href="{% url 'privacy' %}">Privacy</a> <span> | </spam>
+            <a href="{% url 'terms' %}">Terms</a>
+        </div>
+    </div>
+</div>
+
+<!--script-->
+<script>
+
+    //show password
+    document.getElementById('showpass').addEventListener('change', function () {
+        const passwordField = document.getElementById('password');
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
+</script>
+<!--script end-->
+
+{% endblock body %}

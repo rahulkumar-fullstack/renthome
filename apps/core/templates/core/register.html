@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+<!--Page title-->
+{% block title %} Register |{% endblock title %}
+
+<!--body without navbar and footer-->
+{% block body %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="px-3 w-100" style="max-width: 576px">
+        <div class="shadow rounded-3 border bg-white px-3 py-4">
+            <h1 class="text-center text-primary mb-4 fw-bold">Register as {{type}}</h1>
+            <form method="POST">
+                {% csrf_token %}
+
+                <!--Name input-->
+                <div class="mb-3 mb-md-4">
+                    <label for="name" class="form-label fw-semibold">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" />
+                </div>
+
+                <!--email input-->
+                <div class="mb-3 mb-md-4">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" />
+                </div>
+
+                <!--password input-->
+                <div class="mb-2">
+                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" />
+                </div>
+
+                <!--show password-->
+                <div class="form-check mb-3 mb-md-4 d-flex justify-content-end">
+                    <input class="form-check-input me-1" type="checkbox" id="showpass">
+                    <label class="form-check-label" for="showpass">show password</label>
+                </div>
+
+                <!--Confirm password input-->
+                <div class="mb-2">
+                    <label for="cpassword" class="form-label fw-semibold">Confirm Password</label>
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" />
+                </div>
+
+                <!--show password-->
+                <div class="form-check mb-3 mb-md-4 d-flex justify-content-end">
+                    <input class="form-check-input me-1" type="checkbox" id="showcpass">
+                    <label class="form-check-label" for="showcpass">show password</label>
+                </div>
+
+                <div class="text-danger mb-2 fw-semibold text-center">{{msg}}</div>
+
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn btn-primary w-100 text-head fs-5">Register</button>
+                </div>
+            </form>
+            <div class="text-center mt-2">
+                Already have account?
+                <a href="{% url 'login' %}" class="fw-semibold no-line">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--script-->
+<script>
+
+    //show password
+    document.getElementById('showpass').addEventListener('change', function () {
+        const passwordField = document.getElementById('password');
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
+
+    //show confirm password
+    document.getElementById('showcpass').addEventListener('change', function () {
+        const cpasswordField = document.getElementById('cpassword');
+        cpasswordField.type = this.checked ? 'text' : 'password';
+    });
+</script>
+<!--script end-->
+
+{% endblock body %}

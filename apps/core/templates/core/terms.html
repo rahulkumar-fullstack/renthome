@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+<!--Page title-->
+{% block title %}Terms and Conditions |{% endblock title %}
+
+{% load static %}
+{% block custom_css %} 
+<link href="{% static "core/css/terms.css" %}" rel="stylesheet">
+{% endblock custom_css %}
+
+{% block main %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">Terms and Conditions</h1>
+            <div class="card-deck">
+                <div class="card mb-4" data-aos="fade-up">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 1</h5>
+                        <p class="card-text">You must be at least 18 years old to use our services.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 2</h5>
+                        <p class="card-text">You are responsible for maintaining the confidentiality of your account and password.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 3</h5>
+                        <p class="card-text">You agree not to use our services for any illegal or unauthorized purpose.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 4</h5>
+                        <p class="card-text">You must not violate any laws in your jurisdiction.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 5</h5>
+                        <p class="card-text">We reserve the right to terminate your account if you violate any of these terms.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 6</h5>
+                        <p class="card-text">All payments are processed securely through Stripe.</p>
+                    </div>
+                </div>
+                <div class="card mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="card-body">
+                        <h5 class="card-title">Term 7</h5>
+                        <p class="card-text">We provide email notifications for important updates and transactions.</p>
+                    </div>
+                </div>
+                <!-- Add more cards as needed -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+<!--Page title-->
+{% block title %} Choose User |{% endblock title %}
+
+{% load static %}
+{% block custom_css %} 
+<link href="{% static "accounts/css/choose_usertype.css" %}" rel="stylesheet">
+{% endblock custom_css %}
+
+{% block body %}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container">
+        <h1 class="text-center mb-3 text-head">Choose <span class="text-primary">User</span></h1>
+        <div class="row py-4">
+            <div class="col-md-6 my-3">
+                <div class="card role-card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">For Renters</h5>
+                        <ul class="card-text flex-grow-1">
+                            <li>Browse a variety of rental homes 🏘️.</li>
+                            <li>Smart search tools to find your match 🔍.</li>
+                            <li>Compare listings easily 📊.</li>
+                            <li>Secure, simple booking 🛡️.</li>
+                        </ul>
+                        <a href="{% url 'register' %}?type=Renter" class="btn btn-primary mt-3">Create Account</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 my-3">
+                <div class="card role-card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">For Owners</h5>
+                        <ul class="card-text flex-grow-1">
+                            <li>List your property quickly 🏠.</li>
+                            <li>Manage bookings and listings easily 📋.</li>
+                            <li>Track payments seamlessly 💵.</li>
+                            <li>Get paid directly into your account 💳.</li>
+                        </ul>
+                        <a href="{% url 'register' %}?type=Owner" class="btn btn-success mt-3">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

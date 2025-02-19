@@ -141,6 +141,10 @@ MEDIA_URL = "media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# register our custom user model from accounts app
+AUTH_USER_MODEL = "core.CustomUser"
+
+
 # Email configuration
 EMAIL_BACKEND = env("EMAIL_BACKEND")
 EMAIL_HOST = env("EMAIL_HOST")
