@@ -1,4 +1,4 @@
-![logo](static/images/logo.png)
+![logo](apps/core/static/core/images/logo.png)
 
 "A rental website where users can rent or list their property easily."
 

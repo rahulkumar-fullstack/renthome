@@ -12,6 +12,14 @@ from asgiref.sync import sync_to_async
 dateandtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+# # get userid and userrole for navbar.html
+# async def navdata(request):
+#     # Get authentication status & user role asynchronously
+#     is_authenticated = await sync_to_async(lambda: request.user.is_authenticated)()
+#     user_role = await sync_to_async(lambda: getattr(request.user, "role", None))()
+#     return {"is_authenticated": is_authenticated, "user_role": user_role}
+
+
 def home_page(request):
     return render(request, "core/home_page.html")
 
