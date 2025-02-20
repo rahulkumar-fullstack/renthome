@@ -61,7 +61,7 @@ async def user_login(request):
                 "message2": email_msg2,
                 "url": forgot_password_url,
             }
-            await sync_to_async(send_email)(
+            await send_email(
                 subject="Login Successful | RentHome",
                 recipient_email=user_auth.email,
                 context=context,
@@ -197,7 +197,7 @@ async def user_register(request):
     user_exists = await sync_to_async(CustomUser.objects.filter(email=email).exists)()
 
     msg = ""
-    if not user_type:
+    if not user_type or not user_type in ["Tenant", "Landlord"]:
         # Redirect to choose user type page
         return redirect("user-type")
     elif user_exists:
@@ -221,7 +221,7 @@ async def user_register(request):
                 "message2": email_msg2,
                 "url": login_url,
             }
-            await sync_to_async(send_email)(
+            await send_email(
                 subject="Account created successfully | RentHome",
                 recipient_email=email,
                 context=context,
@@ -251,7 +251,7 @@ async def user_logout(request):
         "message1": email_msg1,
     }
 
-    await sync_to_async(send_email)(
+    await send_email(
         subject="Logout successful | RentHome",
         recipient_email=user_email,
         context=context,

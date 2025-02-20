@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 executor = ThreadPoolExecutor(max_workers=5)
 
 
-def send_email(subject, recipient_email, context):
+async def send_email(subject, recipient_email, context):
     # Render the HTML email template
     html_content = render_to_string("send_email/email_template.html", context)
 

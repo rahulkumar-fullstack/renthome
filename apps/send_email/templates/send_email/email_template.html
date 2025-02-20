@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email from RentHome</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -12,61 +11,81 @@
         padding: 20px;
         margin: 0;
         height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+
       .email-container {
         max-width: 600px;
         border: 2px solid #0d6efd;
-        box-shadow: #777;
-        margin: 0 auto;
         background-color: #ffffff;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px grey;
+        padding: 5%;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        margin: auto;
       }
+
       .logo-container {
+        margin: 20px 0px;
+        padding: 1%;
         display: flex;
+        align-items: center;
         justify-content: center;
-        align-items: center;     
-        margin: 20px 0;    
-        padding: 1%;      
       }
+
       .message-container {
         text-align: center;
-        margin: 25px 0;
-        font-size: large;
+        margin: 30px 0;
+        font-size: 18px;
       }
+
       .message-container p {
         text-indent: 4px;
-        line-height: 1.5;
+        line-height: 1.6;
+        margin: 12px 0;
       }
+
       .message-container a {
         display: inline-block;
-        margin-top: 18px;
-        padding: 10px 10px;
+        margin-top: 20px;
+        padding: 12px 20px;
         color: white;
         background-color: #0d6efd;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         text-align: center;
         text-decoration: none;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
       }
+
       .message-container a:hover {
         background-color: #0a58ca;
       }
+
       .footer {
         text-align: center;
         font-size: 14px;
         color: #777;
+        margin-top: 25px;
       }
+
       .footer a {
         text-decoration: none;
+        margin: 0 5px; /* Spacing between social icons */
       }
+
       .footer a:hover {
         text-decoration: underline;
       }
+
       hr {
         height: 0px;
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 10px 0;
       }
     </style>
   </head>
@@ -74,8 +93,12 @@
     <div class="email-container">
       <!--RentHome logo-->
       <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/rahulkumar-fullstack/renthome/main/static/images/logo.png" alt="Description of the image">
-      </div> 
+        <img
+          src="https://raw.githubusercontent.com/rahulkumar-fullstack/renthome/main/static/images/logo.png"
+          alt="RentHome"
+          width="100%"
+        />
+      </div>
 
       <!-- Dynamic Message Section -->
       <div class="message-container">
@@ -90,19 +113,29 @@
       </div>
 
       <!-- Footer Section -->
-      <hr />
       <div class="footer">
+        <hr />
         <p style="margin-bottom: 0px">
           Developed by <br /><strong>Rahulkumar Gupta</strong>
         </p>
         <p style="margin-top: 5px">
-          <a href="https://github.com/rahulkumar-fullstack" target="_blank" style="margin-right: 0px">
-            <img src="https://img.icons8.com/ios-filled/20/000000/github.png" />
+          <a href="https://github.com/rahulkumar-fullstack" target="_blank">
+            <img
+              src="https://img.icons8.com/color/30/github.png"
+              alt="GitHub"
+            />
           </a>
-          <a href="https://linkedin.com/in/rahulkumar-fullstack" target="_blank">
-            <img src="https://img.icons8.com/ios-filled/20/000000/linkedin.png" />
+          <a
+            href="https://linkedin.com/in/rahulkumar-fullstack"
+            target="_blank"
+          >
+            <img
+              src="https://img.icons8.com/color/30/linkedin.png"
+              alt="LinkedIn"
+            />
           </a>
         </p>
+
         <p>&copy; 2025, RentHome. All rights reserved.</p>
       </div>
     </div>
