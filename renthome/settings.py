@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "apps.core",
     "apps.send_email",
-    "apps.owner",
-    "apps.user",
+    "apps.tenant",
+    "apps.landlord",
 ]
 
 MIDDLEWARE = [

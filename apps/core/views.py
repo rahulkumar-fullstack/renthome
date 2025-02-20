@@ -69,10 +69,10 @@ async def user_login(request):
 
             # Redirect based on user role
             if hasattr(user_auth, "role"):
-                if user_auth.role == "Renter":
-                    return redirect("user-home")
+                if user_auth.role == "Tenant":
+                    return redirect("tenant-home")
                 else:
-                    return redirect("owner-home")
+                    return redirect("landlord-home")
             else:
                 return redirect("login")
     return render(request, "core/login.html", {"success": success, "msg": msg})
@@ -111,7 +111,7 @@ async def user_forgot_password(request):
             # Send reset password email asynchronously
             email_msg = f"Your Reset code is {verification_code}. Timestamp: {timezone.now().strftime('%I:%M %p, %d-%m-%Y')}. Use the button below to reset your password."
             email_msg1 = "Do not share this code with anyone."
-            email_msg2 = "Thank you for being a part of our Rent Home!"
+            email_msg2 = "Thank you for being a part of our RentHome!"
             reset_password_url = "http://127.0.0.1:8000/auth/reset-password/"
             context = {
                 "name": user_detail.name,
@@ -121,7 +121,7 @@ async def user_forgot_password(request):
                 "url": reset_password_url,
             }
             await sync_to_async(send_email)(
-                subject="Reset Password | Rent Home",
+                subject="Reset Password | RentHome",
                 recipient_email=user_detail.email,
                 context=context,
             )
@@ -222,7 +222,7 @@ async def user_register(request):
                 "url": login_url,
             }
             await sync_to_async(send_email)(
-                subject="Account created successfully | Rent Home",
+                subject="Account created successfully | RentHome",
                 recipient_email=email,
                 context=context,
             )
@@ -252,7 +252,7 @@ async def user_logout(request):
     }
 
     await sync_to_async(send_email)(
-        subject="Logout successful | Rent Home",
+        subject="Logout successful | RentHome",
         recipient_email=user_email,
         context=context,
     )
