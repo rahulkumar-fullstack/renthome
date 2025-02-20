@@ -13,6 +13,7 @@ h11==0.14.0
 hyperlink==21.0.0
 idna==3.10
 incremental==24.7.2
+markdown2==2.5.3
 mysql-connector-python==9.2.0
 mysqlclient==2.2.7
 pyasn1==0.6.1
