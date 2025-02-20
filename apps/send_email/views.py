@@ -1,25 +1,27 @@
-from django.core.mail import send_mail
+# send_mail/views.py
+from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
-import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
+# Initialize a thread pool executor
+executor = ThreadPoolExecutor(max_workers=5)
 
 
-# Define an async function to send email
-async def send_email(subject, recipient_email, context):
-    # Render HTML email template
+def send_email(subject, recipient_email, context):
+    # Render the HTML email template
     html_content = render_to_string("send_email/email_template.html", context)
 
-    # Create the email body and subject
-    email_subject = subject
-    email_body = html_content
-    from_email = f"RentHome <{settings.EMAIL_HOST_USER}>"
-
-    # Send email asynchronously using Django's async-compatible send_mail function
-    await asyncio.to_thread(
-        send_mail,
-        email_subject,
-        email_body,
-        from_email,
-        [recipient_email],
-        html_message=email_body,
+    # Create email object
+    email = EmailMessage(
+        subject=subject,
+        body=html_content,
+        from_email=f"RentHome <{settings.EMAIL_HOST_USER}>",
+        to=[recipient_email],
     )
+
+    # Set email content type to HTML
+    email.content_subtype = "html"
+
+    # Send email in a separate thread
+    executor.submit(email.send)
