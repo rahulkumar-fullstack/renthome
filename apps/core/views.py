@@ -12,15 +12,15 @@ from asgiref.sync import sync_to_async
 dateandtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-async def home_page(request):
+def home_page(request):
     return render(request, "core/home_page.html")
 
 
-async def privacy_policy(request):
+def privacy_policy(request):
     return render(request, "core/privacy_policy.html")
 
 
-async def terms(request):
+def terms(request):
     return render(request, "core/terms.html")
 
 
