@@ -1,38 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A rental website where user can rent homes easily and owner can list their home for rent">
-    <meta name="keywords" content="rent,django,rental website">
-    <meta name="author" content="Rahulkumar Gupta">
-    <link rel="icon" href="{% static "core/images/favicon.ico" %}" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Easily rent homes or list properties for rent with RentHome. A hassle-free rental experience for tenants and landlords."
+    />
+    <meta
+      name="keywords"
+      content="rent, home rental, house booking, property rental, rental website, Django rental"
+    />
+    <meta name="author" content="Rahulkumar Gupta" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" href="{% static "core/images/favicon.ico" %}"
+    type="image/x-icon">
 
     <title>{% block title %}{% endblock title %} RentHome</title>
-   
-    <!-- custom and bootstrap css files-->
-    <link href="{% static "core/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- custom tailwind css file-->
+    <link href="{% static "core/css/custom.css" %}" rel="stylesheet">
+
+    <!--other custom css files-->
     {% block custom_css %}{% endblock custom_css %}
-</head>
-<body>
-    <!-- use 'body' to load conent without nav & footer-->
+  </head>
+  <body>
     {% block body %}
-    
-     <!--navbar-->
-     {% include "core/navbar.html" %}
-    
-      <main style="min-height:100dvh;" class="container">
-       {% block main %}
-       {% endblock main %}
-      </main>
 
-     <!--footer-->
-     {% include "core/footer.html" %}
+        <!--navbar-->
+        {% include "core/navbar.html" %}
 
+        <main class="min-h-dvh">{% block main %}{% endblock main %}</main>
+
+        <!--footer-->
+        {% include "core/footer.html" %} 
+    
     {% endblock body %}
 
-    <!--bootstrap js files-->
-    <script src="{% static "core/js/bootstrap.bundle.min.js" %}"></script>
-</body>
+    <!--custom js files-->
+    {% block custom_js %}{% endblock custom_js %}
+  </body>
 </html>
