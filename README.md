@@ -1,69 +1,94 @@
-![logo](apps/core/static/core/images/logo.png)
+![Renthome log](apps/core/static/core/images/logo.png)
 
-"A rental website where users can rent or list their property easily."
+**"A modern, high-performance rental platform for seamless property renting and listing."**
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![Django](https://img.shields.io/badge/Django-5.1.6-green)
 ![MySQL](https://img.shields.io/badge/MySQL-9.2-blue)
 ![Uvicorn](https://img.shields.io/badge/Uvicorn-0.34.0-yellow)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.3-purple)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.0-cyan)
 ![Gmail](https://img.shields.io/badge/Gmail-D14836?logo=gmail&logoColor=white)
 
-## Features
+---
 
-- **Backend**: Django 5.1.6 with asynchronous support.
-- **Server**: Uvicorn ASGI server for high-performance asynchronous capabilities.
-- **Database**: MySQL 9.2 using the **`mysql-connector-python`** driver.
-- **Frontend**: Responsive design powered by Bootstrap 5.1.3.
-- **Email Integration**: Gmail API for user notifications and communications.
+## 🚀 About the Project
 
-## Setup
+RentHome is a **fully asynchronous** rental platform built with **Django ASGI and Uvicorn**, ensuring **high performance** and **scalability**. The UI is designed with **Tailwind CSS** for a **lightweight and modern** experience.
 
-1. **Clone the Repository**:
+### ✨ Features
 
-   ```bash
-   git clone https://github.com/rahulkumar-fullstack/renthome.git
-   cd renthome
-   ```
+- **Fast & Scalable**: Built with **Django ASGI + Uvicorn** for non-blocking performance.
+- **Tenant Dashboard**: View upcoming rent, rent duration, and book multiple properties.
+- **Landlord Dashboard**: List properties with images, SEO-optimized keywords, pricing, and facilities.
+- **Email Notifications**: Powered by **Gmail SMTP** for important updates.
+- **Modern UI**: Styled using **Tailwind CSS** with **Node.js package management**.
 
-2. **Create a Virtual Environment**:
+---
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   # On Windows: venv\Scripts\activate
-   ```
+## ⚡ Setup Instructions
 
-3. **Install Dependencies**:
+### 1️⃣ Clone the Repository
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+git clone https://github.com/rahulkumar-fullstack/renthome.git
+cd renthome
+```
 
-4. **Configure Database**:
+### 2️⃣ Create & Activate Virtual Environment
 
-   Ensure your MySQL server is running and create a database. Update the `DATABASES` setting in `settings.py` with your database credentials.
+```bash
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+# Windows: venv\Scripts\activate
+```
 
-5. **Run Migrations**:
+### 3️⃣ Install Backend Dependencies
 
-   ```bash
-   python manage.py migrate
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-6. **Collect Static Files**:
+### 4️⃣ Configure MySQL Database
 
-   ```bash
-   python manage.py collectstatic
-   ```
+- Ensure **MySQL is running**.
+- Create a database and update `DATABASES` in `settings.py` with your credentials.
 
-7. **Start the Development Server**:
+### 5️⃣ Apply Migrations
 
-   ```bash
-   uvicorn renthome.asgi:application --host 127.0.0.1 --port 8000 --reload
-   ```
+```bash
+python manage.py migrate
+```
 
-   Access the application at `http://127.0.0.1:8000/`.
+### 6️⃣ Install Node.js Dependencies (For Tailwind CSS only)
 
-## License
+Ensure **Node.js & npm** are installed, then run:
+
+```bash
+npm install
+```
+
+_(No need to recompile Tailwind unless changes are made. If required, use the command below.)_
+
+```bash
+npx @tailwindcss/cli -i apps/core/static/core/css/tailwind_custom.css -o apps/core/static/core/css/custom.css --watch
+```
+
+### 7️⃣ Collect Static Files
+
+```bash
+python manage.py collectstatic
+```
+
+### 8️⃣ Start the Development Server
+
+```bash
+uvicorn renthome.asgi:application --host 127.0.0.1 --port 8000 --reload
+```
+
+🔗 Access the app: **[http://127.0.0.1:8000/](http://127.0.0.1:8000/)**
+
+---
+
+## 📜 License
 
 This project is licensed under the **Custom License**.
