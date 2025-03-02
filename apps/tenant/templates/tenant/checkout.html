@@ -1,0 +1,88 @@
+{% extends "core/base.html" %}
+
+{% block title %} Checkout {% endblock title %}
+
+{% block main %}
+
+<!-- Container -->
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h2 class="text-center text-2xl font-semibold mb-6">Checkout Summary</h2>
+
+    <!-- Renter and Owner Details -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Renter Details -->
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+            <h5 class="text-lg font-semibold text-center mb-3">Renter Details</h5>
+            <ul class="text-gray-700 space-y-1">
+                <li><strong>Name:</strong> John Doe</li>
+                <li><strong>Contact:</strong> (123) 456-7890</li>
+                <li><strong>Email:</strong> johndoe@example.com</li>
+            </ul>
+            <a href="#" class="block text-center mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition">Edit Renter Details</a>
+        </div>
+
+        <!-- Owner Details -->
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+            <h5 class="text-lg font-semibold text-center mb-3">Owner Details</h5>
+            <ul class="text-gray-700 space-y-1">
+                <li><strong>Name:</strong> Jane Smith</li>
+                <li><strong>Contact:</strong> (098) 765-4321</li>
+                <li><strong>Email:</strong> janesmith@example.com</li>
+            </ul>
+            <a href="#" class="block text-center mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition">Edit Owner Details</a>
+        </div>
+    </div>
+
+    <!-- Property Details -->
+    <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200 mb-6">
+        <h5 class="text-lg font-semibold text-center mb-3">Property Details</h5>
+        <ul class="text-gray-700 space-y-1">
+            <li><strong>Property Type:</strong> Apartment</li>
+            <li><strong>Location:</strong> Downtown, City Name</li>
+            <li><strong>Rent:</strong> $1,200/month</li>
+            <li><strong>Facilities:</strong> Wi-Fi, Air Conditioning, Pool</li>
+        </ul>
+    </div>
+
+    <!-- Rent Period & Payment Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rent Period -->
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+            <h5 class="text-lg font-semibold text-center mb-3">Rent Period</h5>
+            <ul class="text-gray-700 space-y-1">
+                <li><strong>Start Date:</strong> 2024-11-01</li>
+                <li><strong>End Date:</strong> 2024-12-01</li>
+                <li><strong>Total Days:</strong> 30 days</li>
+            </ul>
+            <a href="#" class="block text-center mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition">Edit Rent Period</a>
+        </div>
+
+        <!-- Payment Summary -->
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+            <h5 class="text-lg font-semibold text-center mb-3">Payment Summary</h5>
+            <ul class="text-gray-700 space-y-1">
+                <li><strong>Daily Rate:</strong> $40</li>
+                <li><strong>Total Price:</strong> $1,200</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200 my-6">
+        <h5 class="text-lg font-semibold text-center mb-3">Instructions</h5>
+        <p class="text-gray-700 text-sm text-center">
+            Please review all details before proceeding. By clicking "Checkout," you agree to the rental terms and conditions.
+            Once submitted, changes can only be made by contacting customer support.
+        </p>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="text-center">
+        <button class="bg-green-500 hover:bg-green-600 text-white text-lg px-6 py-3 rounded-md w-1/2 transition">
+            Checkout
+        </button>
+    </div>
+</div>
+
+
+{% endblock main %}

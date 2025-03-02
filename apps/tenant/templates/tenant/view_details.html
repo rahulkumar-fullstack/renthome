@@ -1,0 +1,103 @@
+{% extends "core/base.html" %}
+
+{% block title %} View details {% endblock title %}
+
+{% block main %}
+
+<!-- Container -->
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Property Image & Details -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Property Image -->
+        <div class="bg-white shadow-md rounded-lg border border-gray-200 p-5">
+            <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" 
+                 class="w-full h-64 object-cover rounded-md cursor-pointer" 
+                 alt="Property Image" 
+                 onclick="openModal()">
+            <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition" onclick="openModal()">
+                View Full Image
+            </button>
+        </div>
+
+        <!-- Property Details -->
+        <div class="bg-white shadow-md rounded-lg border border-gray-200 p-5">
+            <h3 class="text-xl font-semibold mb-2">Modern Apartment</h3>
+            <p class="text-gray-600"><strong>Location:</strong> Downtown, City Name</p>
+            <p class="mb-2"><strong>Price:</strong> $1,200/month</p>
+            <p><strong>Type:</strong> Apartment</p>
+            <p><strong>Facilities:</strong> Wi-Fi, Air Conditioning, Pool</p>
+            <p class="text-gray-700"><strong>Description:</strong> A modern and spacious apartment located in the heart of the city, offering luxury amenities and a convenient lifestyle.</p>
+        </div>
+    </div>
+
+    <!-- Rental Calculation Section -->
+    <div class="mt-6 bg-white shadow-md rounded-lg border border-gray-200 p-6">
+        <h5 class="text-lg font-semibold text-center mb-4">Calculate Your Rental Cost</h5>
+        <form>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="startDate" class="block font-medium">Start Date</label>
+                    <input type="date" id="startDate" class="w-full p-2 border rounded-md" onchange="calculateDaysAndPrice()">
+                </div>
+                <div>
+                    <label for="endDate" class="block font-medium">End Date</label>
+                    <input type="date" id="endDate" class="w-full p-2 border rounded-md" onchange="calculateDaysAndPrice()">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="totalDays" class="block font-medium">Total Days</label>
+                <input type="text" id="totalDays" class="w-full p-2 border rounded-md bg-gray-100" readonly placeholder="0">
+            </div>
+            <div class="mb-4">
+                <label for="totalPrice" class="block font-medium">Total Price</label>
+                <input type="text" id="totalPrice" class="w-full p-2 border rounded-md bg-gray-100" readonly placeholder="$0.00">
+            </div>
+            <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md transition">
+                Rent Now
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Full Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-4 rounded-lg shadow-lg max-w-lg">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-600 text-lg">&times;</button>
+        <h5 class="text-lg font-semibold text-center mb-2">Property Image</h5>
+        <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" 
+             class="w-full h-auto rounded-md" alt="Full Property Image">
+    </div>
+</div>
+
+<script>
+    // Sample daily rental rate
+    const dailyRate = 50; 
+
+    function calculateDaysAndPrice() {
+        const startDate = new Date(document.getElementById('startDate').value);
+        const endDate = new Date(document.getElementById('endDate').value);
+
+        if (startDate && endDate && endDate > startDate) {
+            const timeDiff = endDate - startDate;
+            const totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            document.getElementById('totalDays').value = totalDays;
+            document.getElementById('totalPrice').value = `$${(totalDays * dailyRate).toFixed(2)}`;
+        } else {
+            document.getElementById('totalDays').value = 0;
+            document.getElementById('totalPrice').value = "$0.00";
+        }
+    }
+
+    // Modal Functions
+    function openModal() {
+        document.getElementById('imageModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').classList.add('hidden');
+    }
+</script>
+
+
+{% endblock main %}
