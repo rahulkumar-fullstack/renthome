@@ -1,64 +1,55 @@
 {% extends "core/base.html" %}
 
 <!--Page title-->
-{% block title %} Privacy Policy |{% endblock title %}
-
-{% load static %}
-{% block custom_css %} 
-<link href="{% static "core/css/privacy_policy.css" %}" rel="stylesheet">
-{% endblock custom_css %}
+{% block title %} Privacy Policy {% endblock title %}
 
 {% block main %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center mb-4">Privacy Policy</h1>
-            <div class="card-deck">
-                <div class="card mb-4" data-aos="fade-up">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 1</h5>
-                        <p class="card-text">We collect personal information that you provide to us directly.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 2</h5>
-                        <p class="card-text">We use your information to provide, maintain, and improve our services.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 3</h5>
-                        <p class="card-text">We do not share your personal information with third parties without your consent.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 4</h5>
-                        <p class="card-text">We may use cookies to enhance your experience on our website.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 5</h5>
-                        <p class="card-text">You have the right to access and update your personal information.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 6</h5>
-                        <p class="card-text">We use Stripe for secure payment processing.</p>
-                    </div>
-                </div>
-                <div class="card mb-4" data-aos="fade-up" data-aos-delay="600">
-                    <div class="card-body">
-                        <h5 class="card-title">Policy 7</h5>
-                        <p class="card-text">We send email notifications for important updates and transactions.</p>
-                    </div>
-                </div>
-                <!-- Add more cards as needed -->
-            </div>
+<div class="container mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Privacy Policy</h1>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Policy 1 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up">
+            <h3 class="text-lg font-semibold text-gray-800">Data Collection</h3>
+            <p class="text-gray-600 mt-2">We collect personal information that you provide directly, such as your name, email, and payment details.</p>
+        </div>
+
+        <!-- Policy 2 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-lg font-semibold text-gray-800">Usage of Information</h3>
+            <p class="text-gray-600 mt-2">Your data helps us provide, maintain, and enhance our services, ensuring a seamless user experience.</p>
+        </div>
+
+        <!-- Policy 3 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-lg font-semibold text-gray-800">Data Privacy</h3>
+            <p class="text-gray-600 mt-2">We never share your personal information with third parties without your explicit consent.</p>
+        </div>
+
+        <!-- Policy 4 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="text-lg font-semibold text-gray-800">Cookies & Tracking</h3>
+            <p class="text-gray-600 mt-2">We use cookies to enhance your experience by analyzing usage patterns and improving website performance.</p>
+        </div>
+
+        <!-- Policy 5 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="text-lg font-semibold text-gray-800">Your Rights</h3>
+            <p class="text-gray-600 mt-2">You have full access to review, update, or request the deletion of your personal information at any time.</p>
+        </div>
+
+        <!-- Policy 6 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="text-lg font-semibold text-gray-800">Secure Payments</h3>
+            <p class="text-gray-600 mt-2">We use <strong>Stripe</strong> for secure, encrypted payment processing to ensure the safety of your transactions.</p>
+        </div>
+
+        <!-- Policy 7 -->
+        <div class="bg-white shadow-lg rounded-lg p-5" data-aos="fade-up" data-aos-delay="600">
+            <h3 class="text-lg font-semibold text-gray-800">Email Notifications</h3>
+            <p class="text-gray-600 mt-2">We send important updates, security alerts, and transactional emails to keep you informed.</p>
         </div>
     </div>
 </div>
+
 {% endblock main %}
