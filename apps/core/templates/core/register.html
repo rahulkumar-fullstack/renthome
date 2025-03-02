@@ -43,19 +43,6 @@
             <label for="showpass" class="text-gray-600 cursor-pointer">Show Password</label>
           </div>
   
-          <!-- Confirm Password -->
-          <div class="mb-2">
-            <label for="cpassword" class="block font-semibold text-gray-700">Confirm Password</label>
-            <input type="password" id="cpassword" name="cpassword" required minlength="6" placeholder="Confirm your password"
-              class="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          </div>
-  
-          <!-- Show Confirm Password Checkbox -->
-          <div class="flex justify-end items-center text-sm mb-4">
-            <input type="checkbox" id="showcpass" class="mr-1">
-            <label for="showcpass" class="text-gray-600 cursor-pointer">Show Password</label>
-          </div>
-  
           <!-- Error Message -->
           <div class="text-red-500 text-center font-semibold mb-2">{{msg}}</div>
   
@@ -83,12 +70,6 @@
     document.getElementById('showpass').addEventListener('change', function () {
       const passwordField = document.getElementById('password');
       passwordField.type = this.checked ? 'text' : 'password';
-    });
-  
-    // Show confirm password toggle
-    document.getElementById('showcpass').addEventListener('change', function () {
-      const cpasswordField = document.getElementById('cpassword');
-      cpasswordField.type = this.checked ? 'text' : 'password';
     });
 </script>
   
