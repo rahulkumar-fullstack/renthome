@@ -1,0 +1,123 @@
+{% extends "core/base.html" %}
+
+<!--Page title-->
+{% block title %} Edit Home {% endblock title %}
+
+{% block main %}
+
+<div class="max-w-3xl mx-4 md:mx-auto my-4 px-4 py-8 bg-white shadow-xl rounded-xl">
+<h1 class="text-3xl font-bold text-gray-700">✏️ Edit Home</h1>
+  <p class="text-gray-500 text-lg">Update your home details and manage listings.</p>
+  <hr class="my-4 border-gray-300">
+
+  <form method="POST" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      
+      <!-- Current Image -->
+      <div class="mb-3">
+          <h2 class="text-lg font-semibold text-gray-700">Current Image</h2>
+          <img src="{{ home.image.url }}" id="previewImage" class="aspect-video object-cover rounded-md shadow-md" alt="Current Home Image">
+      </div>
+
+      <!-- Upload New Image -->
+      <div class="mb-3">
+          <label for="image" class="block text-gray-700 font-semibold">Upload New Image</label>
+          <input type="file" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" id="image" name="image" accept="image/*" onchange="previewFile()">
+      </div>
+
+      <!-- Address Fields -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+              <label for="inputAddress" class="block text-gray-700 font-semibold">Address</label>
+              <input required type="text" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="inputAddress" name="add" value="{{ home.add }}">
+          </div>
+          <div>
+              <label for="inputAddress2" class="block text-gray-700 font-semibold">Address 2</label>
+              <input required type="text" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="inputAddress2" name="add1" value="{{ home.add1 }}">
+          </div>
+      </div>
+
+      <!-- City & State -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+              <label for="inputCity" class="block text-gray-700 font-semibold">City</label>
+              <input required type="text" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="inputCity" name="city" value="{{ home.city }}">
+          </div>
+          <div>
+              <label for="inputState" class="block text-gray-700 font-semibold">State</label>
+              <select required id="inputState" class="w-full border-gray-300 rounded-md shadow-sm p-2" name="state">
+                  <option value="{{ home.state }}">{{ home.state | capfirst }}</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+              </select>
+          </div>
+      </div>
+
+      <!-- Pincode -->
+      <div>
+          <label for="inputPincode" class="block text-gray-700 font-semibold">Pin Code</label>
+          <input required type="number" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="inputPincode" name="pincode" value="{{ home.pincode }}">
+      </div>
+
+      <!-- Pricing & Capacity -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+              <label for="price" class="block text-gray-700 font-semibold">Per Night Price</label>
+              <input required type="number" step="0.01" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="price" name="price" value="{{ home.price }}">
+          </div>
+          <div>
+              <label for="people" class="block text-gray-700 font-semibold">Max Occupancy</label>
+              <input required type="number" class="w-full border-gray-300 rounded-md shadow-sm p-2" id="people" name="people" value="{{ home.people }}">
+          </div>
+      </div>
+
+      <!-- Summary -->
+      <div>
+          <label for="about" class="block text-gray-700 font-semibold">Summary About House</label>
+          <textarea required class="w-full border-gray-300 rounded-md shadow-sm p-2 h-24" id="about" name="about">{{ home.about }}</textarea>
+      </div>
+
+      <!-- Condition -->
+      <div>
+          <label for="condition" class="block text-gray-700 font-semibold">Condition</label>
+          <select required id="condition" class="w-full border-gray-300 rounded-md shadow-sm p-2" name="condition">
+              <option value="{{ home.condition }}">{{ home.condition }}</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good</option>
+              <option value="Very Good">Very Good</option>
+          </select>
+      </div>
+
+      <!-- Submit & Delete Buttons -->
+      <div class="flex flex-col items-center space-y-4 mt-6">
+          <button type="submit" class="w-3/4 bg-blue-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-700 transition duration-300">
+              ✅ Update Home
+          </button>
+          <p class="text-red-500 font-semibold text-sm">*Delete home permanently</p>
+          <a href="/landlord/delete-home/{{ home.id }}" 
+             class="w-3/4 bg-red-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-red-700 transition duration-300">
+              ❌ Delete Home
+          </a>
+      </div>
+  </form>
+</div>
+
+<!-- Image Preview Script -->
+<script>
+  function previewFile() {
+      const preview = document.getElementById('previewImage');
+      const file = document.getElementById('image').files[0];
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+          preview.src = reader.result;
+      }, false);
+
+      if (file) {
+          reader.readAsDataURL(file);
+      }
+  }
+</script>
+
+{% endblock main %}
