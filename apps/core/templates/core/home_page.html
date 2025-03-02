@@ -1,13 +1,107 @@
 {% extends "core/base.html" %}
-{% load static %}
-{% block custom_css %} 
-<link href="{% static "core/css/home_page.css" %}" rel="stylesheet">
-{% endblock custom_css %}
 
 {% block main %}
+    <!-- Hero Section -->
+    <div class="min-h-dvh  flex flex-col items-center justify-center text-center text-white bg-cover bg-center bg-fixed" style="background-image: url('/static/core/images/bg_welcome_page.jpg');">
+        <h1 class="text-4xl font-bold px-4 py-2 rounded-md text-white">Welcome to RentHome</h1>
+       
+        <p class="text-lg py-16 max-w-2xl px-4 shadow-md">
+            Find the perfect rental home or list your property effortlessly. RentHome offers flexible options, making renting and managing properties a breeze! 🌟
+        </p>
 
-<section class="demo">
-    home
-</section>
+        <div class="py-4 space-y-3">
+            <a href="#" class="block w-60 bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
+                🔍 Start Searching
+            </a>
+            <a href="#" class="block w-60 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+                📋 List Your Property
+            </a>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="mt-12 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" viewBox="0 0 24 24">
+                <path d="M12 16.5c-.27 0-.52-.1-.71-.29l-6-6a1.003 1.003 0 011.42-1.42L12 14.09l5.29-5.3a1.003 1.003 0 011.42 1.42l-6 6c-.19.19-.44.29-.71.29z" />
+            </svg>
+        </div>
+    </div>
+ 
+
+    <div class="bg-slate-100">
+         <!-- Create Account Section -->
+    <div class="container  mx-auto py-12 px-4">
+        <h2 class="text-3xl font-semibold text-center underline mb-8">Create Account</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            
+            <!-- Tenant Card -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">For Tenant</h3>
+                <ul class="list-disc pl-5 mt-3 text-gray-700 space-y-2">
+                    <li>🏘️ Browse a variety of rental homes.</li>
+                    <li>🔍 Smart search tools to find your match.</li>
+                    <li>📊 Compare listings easily.</li>
+                    <li>🛡️ Secure, simple booking.</li>
+                </ul>
+                <a href="{% url 'register' %}?type=Tenant" class="block mt-4 bg-blue-600 text-white py-2 text-center rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Create Account
+                </a>
+            </div>
+
+            <!-- Landlord Card -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">For Landlord</h3>
+                <ul class="list-disc pl-5 mt-3 text-gray-700 space-y-2">
+                    <li>🏠 List your property quickly.</li>
+                    <li>📋 Manage bookings and listings easily.</li>
+                    <li>💵 Track payments seamlessly.</li>
+                    <li>💳 Get paid directly into your account.</li>
+                </ul>
+                <a href="{% url 'register' %}?type=Landlord" class="block mt-4 bg-green-600 text-white py-2 text-center rounded-lg font-semibold hover:bg-green-700 transition">
+                    Create Account
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container  mx-auto py-12 px-4">
+        <h2 class="text-3xl font-semibold text-center underline mb-8">Features</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">Easy Home Management</h3>
+                <p class="text-gray-700 mt-2">Manage your rental properties effortlessly through a streamlined dashboard.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">Advanced Property Search</h3>
+                <p class="text-gray-700 mt-2">Use advanced filters to find the perfect home with precision.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">Secure Stripe Payments</h3>
+                <p class="text-gray-700 mt-2">Enjoy safe and secure payment processing through Stripe.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">User-Friendly Email Services</h3>
+                <p class="text-gray-700 mt-2">Stay connected with automated email services for property management.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">Owner Dashboard</h3>
+                <p class="text-gray-700 mt-2">Monitor analytics, bookings, and payments in a centralized dashboard.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h3 class="text-xl font-bold">Easy Communication</h3>
+                <p class="text-gray-700 mt-2">Stay in touch with tenants through an easy-to-use messaging system.</p>
+            </div>
+
+        </div>
+    </div>
+    </div>
+   
 
 {% endblock main %}
