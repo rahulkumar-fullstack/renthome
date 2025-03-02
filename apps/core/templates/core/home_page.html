@@ -5,15 +5,15 @@
     <div class="min-h-dvh  flex flex-col items-center justify-center text-center text-white bg-cover bg-center bg-fixed" style="background-image: url('/static/core/images/bg_welcome_page.jpg');">
         <h1 class="text-4xl font-bold px-4 py-2 rounded-md text-white">Welcome to RentHome</h1>
        
-        <p class="text-lg py-16 max-w-2xl px-4 shadow-md">
+        <p class="text-lg py-16 max-w-2xl px-4">
             Find the perfect rental home or list your property effortlessly. RentHome offers flexible options, making renting and managing properties a breeze! 🌟
         </p>
 
         <div class="py-4 space-y-3">
-            <a href="#" class="block w-60 bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
+            <a href="{% url 'search' %}" class="block w-60 bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
                 🔍 Start Searching
             </a>
-            <a href="#" class="block w-60 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+            <a href="{% url 'login' %}" class="block w-60 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
                 📋 List Your Property
             </a>
         </div>
