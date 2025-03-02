@@ -1,25 +1,28 @@
-<nav class="sticky right-0 left-0 top-0 bg-white shadow-md flex flex-row justify-between items-center py-2 md:py-4 px-4 md:px-8 lg:px-16">
-  <div>
-    {% load static %}
-    <img class="logo" src="{% static "images/logo.png" %}" width="180" alt="rent home logo" draggable="false" />
-  </div>
-  <div class="hidden md:flex md:flex-row md:gap-4 md:items-center">
-    {% include "core/navlinks.html" %}
-  </div>
+<div class="sticky right-0 left-0 top-0 bg-white shadow-md">
+  <nav class="container mx-auto flex flex-row justify-between items-center py-2 md:py-4 px-4">
+    <div>
+      {% load static %}
+      <img class="logo" src="{% static "images/logo.png" %}" width="180" alt="rent home logo" draggable="false" />
+    </div>
+    <div class="hidden md:flex md:flex-row md:gap-4 md:items-center">
+      {% include "core/navlinks.html" %}
+    </div>
+  
+    <!-- Menu Toggle Button -->
+    <div onclick="openmenu()" class="inline-block md:hidden w-9 h-auto cursor-pointer">
+      <!-- Menu Icon -->
+      <svg id="openmenu" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"  viewBox="0 0 50 50" class="block">
+        <path d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z"></path>
+      </svg>
+  
+      <!-- Close Menu Icon -->
+      <svg id="closemenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="hidden">
+        <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
+      </svg>
+    </div>
+  </nav>
+</div>
 
-  <!-- Menu Toggle Button -->
-  <div onclick="openmenu()" class="inline-block md:hidden w-10 h-auto cursor-pointer">
-    <!-- Menu Icon -->
-    <svg id="openmenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="block">
-      <path d="M 5 9 L 5 11 L 45 11 L 45 9 L 5 9 z M 5 24 L 5 26 L 45 26 L 45 24 L 5 24 z M 5 39 L 5 41 L 45 41 L 45 39 L 5 39 z"></path>
-    </svg>
-
-    <!-- Close Menu Icon -->
-    <svg id="closemenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="hidden">
-      <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
-    </svg>
-  </div>
-</nav>
 
 <!-- Mobile Menu (Fixed at Top Center) -->
 <div id="menutab" class="hidden md:hidden fixed  right-0 left-0 bg-white shadow-lg rounded-b-xl w-full py-6 z-50">
