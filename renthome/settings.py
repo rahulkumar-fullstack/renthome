@@ -134,8 +134,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 WHITENOISE_AUTOREFRESH = True  # For development, it can be set to True
 
 # Path to the media files directory
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "media/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
