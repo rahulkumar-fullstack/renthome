@@ -1,5 +1,53 @@
-<nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary py-1 py-md-2 px-0 px-md-0 shadow">
-  <div class="container-lg">
+<nav class="sticky right-0 left-0 top-0 bg-white shadow-md flex flex-row justify-between items-center py-2 md:py-4 px-4 md:px-8 lg:px-16">
+  <div>
+    {% load static %}
+    <img class="logo" src="{% static "images/logo.png" %}" width="180" alt="rent home logo" draggable="false" />
+  </div>
+  <div class="hidden md:flex md:flex-row md:gap-4 md:items-center">
+    {% include "core/navlinks.html" %}
+  </div>
+
+  <!-- Menu Toggle Button -->
+  <div onclick="openmenu()" class="inline-block md:hidden w-10 h-auto cursor-pointer">
+    <!-- Menu Icon -->
+    <svg id="openmenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="block">
+      <path d="M 5 9 L 5 11 L 45 11 L 45 9 L 5 9 z M 5 24 L 5 26 L 45 26 L 45 24 L 5 24 z M 5 39 L 5 41 L 45 41 L 45 39 L 5 39 z"></path>
+    </svg>
+
+    <!-- Close Menu Icon -->
+    <svg id="closemenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="hidden">
+      <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+    </svg>
+  </div>
+</nav>
+
+<!-- Mobile Menu (Fixed at Top Center) -->
+<div id="menutab" class="hidden md:hidden fixed  right-0 left-0   bg-white shadow-lg rounded-b-xl w-full py-6 z-50">
+  <div class="flex flex-col gap-4 justify-center w-full items-center">
+    {% include "core/navlinks.html" %}
+  </div>
+</div>
+
+<script>
+  const openmenu = () => {
+    const menu = document.getElementById("menutab");
+    const openIcon = document.getElementById("openmenu");
+    const closeIcon = document.getElementById("closemenu");
+
+    // Toggle menu visibility
+    menu.classList.toggle("hidden");
+
+    // Toggle menu icon visibility
+    openIcon.classList.toggle("hidden");
+    closeIcon.classList.toggle("hidden");
+  };
+
+  
+</script>
+
+
+{% comment %} 
+<div class="container-lg">
     <div class="d-flex align-items-center">
       <a
         class="navbar-toggler border-0 px-0 mx-0 me-1 btn btn-ghost"
@@ -49,5 +97,4 @@
       {% endif %}
     </div>
   </div>
-</nav>
-
+{% endcomment %}
