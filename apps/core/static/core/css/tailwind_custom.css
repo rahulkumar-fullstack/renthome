@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+
+/* button */
+.btn{
+    @apply py-1 px-2 active:scale-95 rounded-md
+}
