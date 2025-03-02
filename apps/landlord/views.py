@@ -2,10 +2,8 @@ from django.shortcuts import render,redirect, get_object_or_404
 from apps.core.models import CustomUser
 from .models import HomeDetails
 from apps.send_email.views import send_email
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from asgiref.sync import sync_to_async
-from django.http import HttpResponseRedirect
 from datetime import datetime
 
 
@@ -75,7 +73,8 @@ async def edit_home(request, pk):
     # Fetch home asynchronously
     homedetails = await HomeDetails.objects.filter(id=pk).afirst()
     if not homedetails:
-        return redirect('landlord-home')  # Redirect if home not found
+        # Redirect if home not found
+        return redirect('landlord-home')  
 
     # If GET request, render form with home details
     if request.method == 'GET':
@@ -118,7 +117,7 @@ async def edit_home(request, pk):
 
     # Send login notification email asynchronously
     email_msg = "Home updated successfully"
-    email_msg1 = f"You home updated successfully on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}. If this wasn't you, please click the button below to reset your password."
+    email_msg1 = f"You home was updated successfully on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}. If this wasn't you, please click the button below to reset your password."
     email_msg2 = "Thank you for being with us!"
     forgot_password_url = "http://127.0.0.1:8000/auth/forgot-password/"
     context = {
