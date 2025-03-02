@@ -9,25 +9,35 @@
     <p class="text-center text-gray-500 text-sm mb-4">Search for homes in your desired location.</p>
 
     <!-- Location Input -->
-    <form id="searchForm">
+    <form method="POST" id="searchForm">
+      {% csrf_token %}
       <div class="mb-4">
-        <input type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Enter location" required />
+        <label class="block text-sm font-medium text-gray-700">City</label>
+        <input name="city" type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Enter city name" required />
       </div>
 
-      <!-- Advanced Search Form (Hidden by default) -->
-      <div id="advancedSearchForm" class="hidden">
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Min Price (₹):</label>
-            <input type="number" id="minPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Min Price" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Max Price (₹):</label>
-            <input type="number" id="maxPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Max Price" />
-          </div>
-        </div>
+      <div class="mb-4">
+        <label for="choosestate" class="block text-sm font-medium text-gray-700">State</label>
+        <select name="state" id="choosestate" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
+          <option value="" disabled selected>Select State</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Goa">Goa</option>
+          <option value="Gujarat">Gujarat</option>
+        </select>  
+      </div>
 
-        <!-- Rent Duration -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Min Price (₹)</label>
+            <input name="minprice" type="number" id="minPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Min Price" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Max Price (₹)</label>
+            <input name="maxprice" type="number" id="maxPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Max Price" />
+          </div>
+      </div>
+
+        {% comment %} <!-- Rent Duration -->
         <div class="grid grid-cols-2 gap-3 my-3">
           <div>
             <label class="block text-sm font-medium text-gray-700">Start Date:</label>
@@ -37,49 +47,29 @@
             <label class="block text-sm font-medium text-gray-700">End Date:</label>
             <input type="date" id="endDate" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" />
           </div>
-        </div>
+        </div> {% endcomment %}
 
         <!-- Property Type -->
-        <div class="mb-3">
+      <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700">Property Type:</label>
-          <select id="propertyType" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
+          <select name="type" id="propertyType" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
             <option value="" disabled>Select property type</option>
             <option value="Flat">Flat</option>
             <option value="House">House</option>
             <option value="Apartment">Apartment</option>
             <option value="All" selected>All</option>
           </select>
-        </div>
       </div>
 
       <!-- Find Home Button -->
-      <div id="quickFindSection" class="mb-3">
-        <button type="button" id="toggleBtn" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
-          Quick Find Home
+      <div class="mb-3">
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
+        Find Perfect Home
         </button>
-      </div>
-
-      <!-- Toggle Switch -->
-      <div class="flex items-center justify-center space-x-2 mt-2">
-        <label class="text-sm font-bold text-gray-700" id="toggleText">Advanced Search</label>
-        <input type="checkbox" id="toggleSearch" class="w-5 h-5 accent-green-500" />
       </div>
     </form>
   </div>
 </div>
-
-<!-- Toggle button script -->
-<script>
-  const toggleSearch = document.getElementById('toggleSearch');
-  const advancedSearchForm = document.getElementById('advancedSearchForm');
-  const toggleBtn = document.getElementById('toggleBtn');
-  const toggleText = document.getElementById('toggleText');
-
-  toggleSearch.addEventListener('change', function () {
-    advancedSearchForm.classList.toggle('hidden');
-    toggleBtn.textContent = toggleSearch.checked ? 'Find Perfect Home' : 'Quick Find Home';
-  });
-</script>
 
 
 {% endblock main %}
