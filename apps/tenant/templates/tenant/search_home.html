@@ -3,20 +3,21 @@
 {% block title %} Search Home {% endblock title %}
 
 {% block main %}
+
 <div class="flex justify-center items-center min-h-dvh bg-gray-100 px-4">
-  <div class="shadow-sm rounded-lg bg-white border border-gray-300 p-5 w-full max-w-sm">
-    <h3 class="text-center text-xl font-semibold text-gray-900">Find Your Perfect Home</h3>
+  <div class="shadow-sm rounded-lg bg-white border border-gray-300 p-5 w-full max-w-2xl">
+    <h3 class="text-center text-3xl font-semibold text-gray-900">Find Your Perfect Home</h3>
     <p class="text-center text-gray-500 text-sm mb-4">Search for homes in your desired location.</p>
 
     <!-- Location Input -->
     <form method="POST" id="searchForm">
       {% csrf_token %}
-      <div class="mb-4">
+      <div class="mb-4 space-y-2">
         <label class="block text-sm font-medium text-gray-700">City</label>
         <input name="city" type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Enter city name" required />
       </div>
 
-      <div class="mb-4">
+      <div class="mb-4 space-y-2">
         <label for="choosestate" class="block text-sm font-medium text-gray-700">State</label>
         <select name="state" id="choosestate" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
           <option value="" disabled selected>Select State</option>
@@ -27,11 +28,11 @@
       </div>
 
       <div class="grid grid-cols-2 gap-3 mb-4">
-          <div>
+          <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Min Price (₹)</label>
             <input name="minprice" type="number" id="minPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Min Price" />
           </div>
-          <div>
+          <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Max Price (₹)</label>
             <input name="maxprice" type="number" id="maxPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Max Price" />
           </div>
@@ -50,7 +51,7 @@
         </div> {% endcomment %}
 
         <!-- Property Type -->
-      <div class="mb-6">
+      <div class="mb-6 space-y-2">
           <label class="block text-sm font-medium text-gray-700">Property Type:</label>
           <select name="type" id="propertyType" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
             <option value="" disabled>Select property type</option>
@@ -62,7 +63,7 @@
       </div>
 
       <!-- Find Home Button -->
-      <div class="mb-3">
+      <div class="py-4">
         <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
         Find Perfect Home
         </button>
