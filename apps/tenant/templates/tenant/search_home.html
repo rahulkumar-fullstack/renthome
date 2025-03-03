@@ -30,7 +30,7 @@
       <div class="grid grid-cols-2 gap-3 mb-4">
           <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Min Price (₹)</label>
-            <input name="minprice" type="number" id="minPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Min Price" />
+            <input name="minprice" value="1" type="number" id="minPrice" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" placeholder="Min Price" />
           </div>
           <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Max Price (₹)</label>
@@ -38,27 +38,14 @@
           </div>
       </div>
 
-        {% comment %} <!-- Rent Duration -->
-        <div class="grid grid-cols-2 gap-3 my-3">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Start Date:</label>
-            <input type="date" id="startDate" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">End Date:</label>
-            <input type="date" id="endDate" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" />
-          </div>
-        </div> {% endcomment %}
-
-        <!-- Property Type -->
+      <!-- Property Type -->
       <div class="mb-6 space-y-2">
           <label class="block text-sm font-medium text-gray-700">Property Type:</label>
-          <select name="type" id="propertyType" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
-            <option value="" disabled>Select property type</option>
+          <select required name="type" id="propertyType" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300">
+            <option selected disabled>Select property type</option>
             <option value="Flat">Flat</option>
             <option value="House">House</option>
             <option value="Apartment">Apartment</option>
-            <option value="All" selected>All</option>
           </select>
       </div>
 
