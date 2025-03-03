@@ -28,7 +28,7 @@
       {% endif %}
     </div>
     
-    <p class="text-blue-500 text-center text-2xl font-semibold">
+    <p class="text-blue-500 text-center text-2xl py-4 font-semibold">
       {{ msg }}
     </p>
   
@@ -51,6 +51,11 @@
           <p>
             <span class="font-bold">Price: </span>
             <span class="text-blue-600 font-bold">₹ {{ home.price }} (1 day)</span>
+          </p>
+
+          <p>
+            <span class="font-bold">Property Type: </span>
+            <span class="font-semibold">{{ home.type }}</span>
           </p>
           <p class="text-gray-700 text-sm italic truncate">
             {{ home.about }}

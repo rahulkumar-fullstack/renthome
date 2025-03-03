@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% block title %} Search Home {% endblock title %}
+
+{% block body %}
+
+<div class="flex justify-center items-center min-h-dvh bg-gray-100 px-4">
+  <div class="shadow-sm rounded-lg bg-white border border-gray-300 p-5 w-full max-w-2xl">
+    <h3 class="text-center text-3xl font-semibold text-gray-900">Payment</h3>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-4 space-y-2">
+        <label class="block text-sm font-medium text-gray-700">Total Price</label>
+        <input name="totalprice" value="{{tprice}}" disabled type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-green-300" required />
+      </div>
+
+      <div class="py-4">
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
+        Pay Now
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock body %}

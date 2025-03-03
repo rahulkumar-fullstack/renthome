@@ -47,6 +47,13 @@
     <!-- Rental Calculation Section -->
     <div class="mt-6 bg-white shadow-md rounded-lg border border-gray-200 p-6">
         <h5 class="text-lg font-semibold text-center mb-4">Calculate Your Rental Cost</h5>
+
+        {% if msg %}
+        <div class="bg-red-300 text-black text-center text-sm my-3 py-2 px-3 rounded-md">
+          {{ msg }}
+        </div>
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
