@@ -58,7 +58,12 @@
                             {{ home.condition }}
                         </span>
                     </p>
-                    <p class="text-gray-600">📍 {{ home.state }} - {{ home.pincode }}</p>
+                    <p class="text-gray-800 font-semibold text-lg flex items-center">
+                        📍 {{ home.state }} - {{ home.pincode }}
+                        <span class="ml-auto text-xs bg-blue-100 text-green-600 px-2 py-1 rounded-full">
+                            {{ home.type }}
+                        </span>
+                    </p>
                     <p class="text-gray-700">
                         <span class="font-semibold">Per Night:</span> 
                         <span class="text-green-600 font-bold">₹ {{ home.price }}</span>

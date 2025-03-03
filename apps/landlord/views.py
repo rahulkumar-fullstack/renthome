@@ -29,6 +29,7 @@ async def add_home(request):
         price = request.POST.get('price')
         people = request.POST.get('people')
         about = request.POST.get('about')
+        type = request.POST.get('type')
         condition = request.POST.get('condition')
         image_file = request.FILES.get('image')
 
@@ -38,7 +39,7 @@ async def add_home(request):
         # Async DB Operation
         await HomeDetails.objects.acreate(
             image=image_file, add=add, add1=add1, state=state, city=city,
-            pincode=pincode, about=about, condition=condition,
+            pincode=pincode, about=about, condition=condition,type=type,
             price=price, people=people, lid_id=user_id
         )
 
@@ -92,6 +93,7 @@ async def edit_home(request, pk):
     people = request.POST.get('people')
     about = request.POST.get('about')
     condition = request.POST.get('condition')
+    type = request.POST.get('type')
 
     # Update image if uploaded
     if 'image' in request.FILES:
@@ -107,6 +109,7 @@ async def edit_home(request, pk):
     homedetails.people = people
     homedetails.about = about
     homedetails.condition = condition
+    homedetails.type = type
 
     # Save changes asynchronously
     await sync_to_async(homedetails.save)()

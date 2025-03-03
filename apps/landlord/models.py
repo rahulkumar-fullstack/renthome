@@ -11,6 +11,7 @@ class HomeDetails(models.Model):
     price=models.DecimalField(max_digits=10, decimal_places=2)
     about=models.CharField(max_length=200)
     condition = models.CharField(max_length=50)
+    type = models.CharField(max_length=50,default="House")
     status = models.CharField(max_length=50,default="not rented")
     people=models.IntegerField(default=1)
     lid= models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
