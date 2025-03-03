@@ -26,6 +26,7 @@ class Rentdetails(models.Model):
     total_days=models.IntegerField(default=1)
     total_price=models.DecimalField( max_digits=10, decimal_places=2,default=1)
     pay_status=models.CharField(max_length=50,default="pending")
+    payment_id=models.CharField(max_length=200,default="sampleid")
     u=models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     p=models.ForeignKey(HomeDetails, on_delete=models.CASCADE, default=1)
 
