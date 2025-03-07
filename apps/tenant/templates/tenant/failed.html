@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+
+{% block title %} Payment Failed {% endblock title %}
+
+{% block body %}
+
+<div class="flex justify-center items-center min-h-dvh bg-gray-100 px-4">
+  <div class="shadow-sm rounded-lg bg-white border border-gray-300 p-6 w-full max-w-2xl text-center">
+    <h3 class="text-3xl font-semibold text-red-500 mb-3">❌ Payment Failed!</h3>
+    <p class="text-gray-700 text-lg">
+      Something went wrong. You will be redirected to the home page in 
+      <span id="countdown" class="font-bold text-blue-500">3</span> seconds.
+    </p>
+    <p class="text-gray-600 text-sm mt-2">
+      If this issue persists, please try again or contact support.
+    </p>
+  </div>
+</div>
+
+<!-- JavaScript for Redirect -->
+<script>
+  let countdown = 3;
+  const countdownElement = document.getElementById("countdown");
+
+  const timer = setInterval(() => {
+    countdown--;
+    countdownElement.textContent = countdown;
+    
+    if (countdown === 0) {
+      clearInterval(timer);
+      window.location.href = "/";
+    }
+  }, 1000);
+</script>
+
+{% endblock body %}
