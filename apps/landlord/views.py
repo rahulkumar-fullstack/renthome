@@ -1,21 +1,61 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from apps.core.models import CustomUser
-from .models import HomeDetails
+from .models import HomeDetails , Rentdetails
 from apps.send_email.views import send_email
 from django.contrib.auth.decorators import login_required
 from asgiref.sync import sync_to_async
 from datetime import datetime
+from django.utils.timezone import now
 
 
-# Create your views here.
+@login_required
 def landlord_home(request):
-    is_authenticated = request.user.is_authenticated
-    if not is_authenticated:
-        return redirect('home')
-    else:
-        user_id=request.user.id
-        homedetails =HomeDetails.objects.filter(lid_id=user_id)
-    return render(request, "landlord/landlord_home.html",{"homedetails": homedetails})
+    user_id = request.user.id
+
+    # Fetch all homes listed by the landlord
+    homedetails = HomeDetails.objects.filter(lid_id=user_id)
+
+    # Fetch currently rented homes
+    rented_homes = Rentdetails.objects.filter(
+        p__lid_id=user_id, pay_status="paid"
+    ).select_related("p")  # Optimized query with related property
+
+    today = now().date()
+    rented_home_data = []
+
+    for rent in rented_homes:
+        home = rent.p  # Related home details
+
+        # Ensure dates are `date` type
+        start_date = rent.start_date.date() if isinstance(rent.start_date, datetime) else rent.start_date
+        end_date = rent.end_date.date() if isinstance(rent.end_date, datetime) else rent.end_date
+
+        # Calculate remaining days
+        remaining_days = max((end_date - today).days, 0) + 1
+
+        # Total rental duration
+        total_days = (end_date - start_date).days + 1
+
+        # Append details to list
+        rented_home_data.append({
+            "home": home,
+            "start_date": start_date,
+            "end_date": end_date,
+            "total_days": total_days,
+            "remaining_days": remaining_days,
+            "total_price": rent.total_price,
+        })
+
+    return render(request, "landlord/landlord_home.html", {
+        "homedetails": homedetails,
+        "rented_home_data": rented_home_data,
+    })
+
+def view_homes_deatils(request):
+    user_id=request.user.id
+    homedetails =HomeDetails.objects.filter(lid_id=user_id)
+
+    return render(request, "landlord/view_all_homes.html", {"homedetails": homedetails})
 
 #add home here
 @login_required

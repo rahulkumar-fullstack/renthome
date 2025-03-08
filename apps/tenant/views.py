@@ -160,6 +160,7 @@ async def view_detail(request, pk):
 
     return await sync_to_async(render)(request, "tenant/view_details.html", {"home": home})
 
+@login_required
 async def user_checkout(request):
     # ✅ Fetch user safely in an async view
     user_id = await sync_to_async(lambda: request.user.id)()
