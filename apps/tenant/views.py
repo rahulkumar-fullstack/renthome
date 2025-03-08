@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from apps.core.models import CustomUser
 from apps.landlord.models import HomeDetails, Rentdetails
 from django.urls import reverse
-from apps.send_email.views import send_email
 from django.contrib.auth.decorators import login_required
-from asgiref.sync import sync_to_async
 from datetime import datetime
+import stripe
+from django.conf import settings
+from django.http import JsonResponse
+from apps.send_email.views import send_email
 
 
 # Create your views here.
@@ -14,12 +16,12 @@ def tenant_home(request):
     if not is_authenticated:
         return redirect("home")
     else:
+        # show user rented home means in rentdetails is pay_status is paid then show here
         user_id = request.user.id
         rented_home_ids = Rentdetails.objects.filter(u_id=user_id).values_list(
             "p_id", flat=True
         )
 
-        # Fetch all home details matching the rented home IDs
         homedetails = HomeDetails.objects.filter(id__in=rented_home_ids)
     return render(request, "tenant/tenant_home.html", {"homedetails": homedetails})
 
@@ -177,7 +179,7 @@ def user_checkout(request):
             return redirect(url)
     return render(request, "tenant/checkout.html",context=data)
 
-
+@login_required
 def user_payment(request):
     data={}
     # Retrieve data from url
@@ -185,4 +187,75 @@ def user_payment(request):
     totalprice = request.GET.get("totalprice")
     data["tprice"] = totalprice
     # if request.method == "POST":
+    if request.method == "POST":
+            url = (
+                reverse("create-checkout")
+                + f"?id={id}&totalprice={totalprice}"
+            )
+            return redirect(url)
     return render(request, "tenant/payment.html",context=data)
+
+#stripe payment checkout 
+
+# Set your secret Stripe API key
+stripe.api_key = settings.STRIPE_KEY
+def create_checkout_session(request):
+    rentdetails_id = request.GET.get("id")  # Rentdetails entry ID
+    total_price = request.GET.get("totalprice")
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "inr",
+                        "product_data": {"name": "Home Rental Payment"},
+                        "unit_amount": int(float(total_price) * 100),  # Convert ₹ to paise
+                    },
+                    "quantity": 1,
+                },
+            ],
+            mode="payment",
+            success_url=request.build_absolute_uri(
+                reverse("payment-success") + f"?session_id={{CHECKOUT_SESSION_ID}}&id={rentdetails_id}"
+            ), 
+            cancel_url=request.build_absolute_uri(reverse("payment-failed")),
+        )
+        return redirect(checkout_session.url)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+#update some details in db
+def user_success(request):
+    rentdetails_id = request.GET.get("id")  # Rentdetails entry ID
+    session_id = request.GET.get("session_id")  # Stripe Session ID
+
+    try:
+        # Retrieve the Stripe session
+        session = stripe.checkout.Session.retrieve(session_id)
+        payment_intent_id = session.payment_intent  # Get the payment ID from Stripe
+
+        # Retrieve the Rentdetails entry
+        rentdetails = Rentdetails.objects.get(id=rentdetails_id)
+        home = HomeDetails.objects.get(id=rentdetails.p_id)
+
+        # Update rentdetails as paid and save the payment ID
+        rentdetails.pay_status = "paid"
+        rentdetails.payment_id = payment_intent_id  # Save Stripe Payment ID
+        rentdetails.save()
+
+        # Mark home as rented
+        home.status = "rented"
+        home.save()
+
+    except Rentdetails.DoesNotExist:
+        return redirect("home")  # Redirect if ID is invalid
+    except stripe.error.StripeError as e:
+        return redirect("payment-failed")  # Handle Stripe errors
+    
+    return render(request, "tenant/success.html")
+
+def user_fail(request):
+    return render(request, "tenant/failed.html")
