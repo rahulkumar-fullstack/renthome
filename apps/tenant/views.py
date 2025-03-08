@@ -1,3 +1,4 @@
+from asgiref.sync import sync_to_async
 from django.shortcuts import render, redirect
 from apps.core.models import CustomUser
 from apps.landlord.models import HomeDetails, Rentdetails
@@ -10,23 +11,23 @@ from django.http import JsonResponse
 from apps.send_email.views import send_email
 
 
-# Create your views here.
-def tenant_home(request):
-    is_authenticated = request.user.is_authenticated
-    if not is_authenticated:
+# ✅ Async tenant home
+async def tenant_home(request):
+    user_id = await sync_to_async(lambda: request.user.id)()
+    auth_user =  await sync_to_async(lambda: request.user.is_authenticated)()
+    if not auth_user:
         return redirect("home")
-    else:
-        # show user rented home means in rentdetails is pay_status is paid then show here
-        user_id = request.user.id
-        rented_home_ids = Rentdetails.objects.filter(u_id=user_id).values_list(
-            "p_id", flat=True
-        )
 
-        homedetails = HomeDetails.objects.filter(id__in=rented_home_ids)
-    return render(request, "tenant/tenant_home.html", {"homedetails": homedetails})
+    rented_home_ids = await sync_to_async(
+        lambda: list(Rentdetails.objects.filter(u_id=user_id, pay_status="paid").values_list("p_id", flat=True))
+    )()
+    
+    homedetails = await sync_to_async(lambda: list(HomeDetails.objects.filter(id__in=rented_home_ids, status="rented")))()
+    
+    return await sync_to_async(render)(request, "tenant/tenant_home.html", {"homedetails": homedetails})
 
 
-# search home view
+#search home
 def search_home(request):
     if request.method == "POST":
         city = request.POST["city"]
@@ -42,6 +43,7 @@ def search_home(request):
     return render(request, "tenant/search_home.html")
 
 
+# ✅ Async search result
 # search result view
 def search_result(request):
     data = {}
@@ -105,157 +107,163 @@ def search_result(request):
     return render(request, "tenant/search_results.html", context=data)
 
 
-# view full details view
-def view_detail(request, pk):
-    data={}
-    home = HomeDetails.objects.get(id=pk)
-    data["home"] =home
+async def view_detail(request, pk):
+    home = await HomeDetails.objects.aget(id=pk)
+
     if request.method == "POST":
         startDate = request.POST["sdate"]
         endDate = request.POST["edate"]
         totalDays = request.POST["tdays"]
         totalPrice = request.POST["tprice"]
-        msg=""
-        if startDate > endDate:
-            msg = "Your End Date is less than Start Date choose correctly" 
-            data["msg"] = msg
-        else:
-            url = (
-                reverse("checkout")
-                + f"?id={pk}&startdate={startDate}&enddate={endDate}&totaldays={totalDays}&totalprice={totalPrice}"
+
+        # Convert string dates to datetime objects
+        start_date_obj = datetime.strptime(startDate, "%Y-%m-%d").date()
+        end_date_obj = datetime.strptime(endDate, "%Y-%m-%d").date()
+
+        if start_date_obj >= end_date_obj:
+            return await sync_to_async(render)(
+                request, "tenant/view_details.html", {"home": home, "msg": "End Date must be after Start Date!"}
             )
-            return redirect(url)
-    return render(request, "tenant/view_details.html", context=data)
 
+        url = (
+            reverse("checkout")
+            + f"?id={pk}&startdate={startDate}&enddate={endDate}&totaldays={totalDays}&totalprice={totalPrice}"
+        )
+        return redirect(url)
 
-# checkout view
-def user_checkout(request):
-    #check if user is logged in or not if not then redirect to login page
-    is_authenticated = request.user.is_authenticated
-    if not is_authenticated:
-        return redirect("login")
-    else:
-        data={}
-        # Retrieve data from url
-        id= request.GET.get('id')
-        startdate = request.GET.get("startdate")
-        enddate = request.GET.get("enddate")
-        totaldays = request.GET.get("totaldays")
-        totalprice = request.GET.get("totalprice")
-        home = HomeDetails.objects.get(id=id)
+    return await sync_to_async(render)(request, "tenant/view_details.html", {"home": home})
 
-        #retrive user details
-        tenant_id= request.user.id
-        t_details = CustomUser.objects.get(id=tenant_id)
-        data["t_details"] = t_details
+async def user_checkout(request):
+    # ✅ Fetch user safely in an async view
+    user_id = await sync_to_async(lambda: request.user.id)()
+    id = request.GET.get('id')
+    startdate = request.GET.get("startdate")
+    enddate = request.GET.get("enddate")
+    totaldays = request.GET.get("totaldays")
+    totalprice = request.GET.get("totalprice")
 
-        #retrive landlord details
-        landlord_id= home.lid_id
-        l_details = CustomUser.objects.get(id=landlord_id)
-        data["l_details"] = l_details
+    # ✅ Fetch all DB objects asynchronously
+    home = await HomeDetails.objects.aget(id=id)
+    tenant = await CustomUser.objects.aget(id=user_id)
+    landlord = await CustomUser.objects.aget(id=home.lid_id)
 
-        data["home"]= home
-        data["sdate"]  = startdate
-        data['edate'] = enddate
-        data['tdays'] = totaldays
-        data['tprice']= totalprice
+    if request.method == "POST":
+        rentdetails = Rentdetails(
+            start_date=startdate,
+            end_date=enddate,
+            total_days=totaldays,
+            total_price=totalprice,
+            u_id=tenant.id,
+            p_id=id
+        )
+        await sync_to_async(rentdetails.save)()
 
-        if request.method == "POST":
-            #save details in rentdetails
-            rentdetails = Rentdetails.objects.create(
-                start_date=startdate,
-                end_date=enddate,
-                total_days=totaldays,
-                total_price=totalprice,
-                u_id=tenant_id,
-                p_id=id
-            )
-            rentdetails.save()
+        return redirect(reverse("payment") + f"?id={id}&totalprice={totalprice}")
 
-            url = (
-                reverse("payment")
-                + f"?id={id}&totalprice={totalprice}"
-            )
-            return redirect(url)
-    return render(request, "tenant/checkout.html",context=data)
+    return await sync_to_async(render)(request, "tenant/checkout.html", {
+        "home": home,
+        "t_details": tenant,
+        "l_details": landlord,
+        "sdate": startdate,
+        "edate": enddate,
+        "tdays": totaldays,
+        "tprice": totalprice
+    })
 
 @login_required
-def user_payment(request):
-    data={}
-    # Retrieve data from url
-    id= request.GET.get('id')
+async def user_payment(request):
+    data = {}
+
+    # Retrieve data from URL
+    id = request.GET.get('id')
     totalprice = request.GET.get("totalprice")
     data["tprice"] = totalprice
-    # if request.method == "POST":
+
     if request.method == "POST":
-            url = (
-                reverse("create-checkout")
-                + f"?id={id}&totalprice={totalprice}"
-            )
-            return redirect(url)
-    return render(request, "tenant/payment.html",context=data)
+        url = reverse("create-checkout") + f"?id={id}&totalprice={totalprice}"
+        return redirect(url)  # ✅ No need to await redirect()
 
-#stripe payment checkout 
+    return await sync_to_async(render)(request, "tenant/payment.html", data)
 
-# Set your secret Stripe API key
+
+# ✅ Async Stripe payment checkout
 stripe.api_key = settings.STRIPE_KEY
-def create_checkout_session(request):
-    rentdetails_id = request.GET.get("id")  # Rentdetails entry ID
+
+async def create_checkout_session(request):
+    rentdetails_id = request.GET.get("id")
     total_price = request.GET.get("totalprice")
 
     try:
-        checkout_session = stripe.checkout.Session.create(
+        # Convert Stripe API call to async
+        checkout_session = await sync_to_async(stripe.checkout.Session.create)(
             payment_method_types=["card"],
-            line_items=[
-                {
-                    "price_data": {
-                        "currency": "inr",
-                        "product_data": {"name": "Home Rental Payment"},
-                        "unit_amount": int(float(total_price) * 100),  # Convert ₹ to paise
-                    },
-                    "quantity": 1,
+            line_items=[{
+                "price_data": {
+                    "currency": "inr",
+                    "product_data": {"name": "Home Rental Payment"},
+                    "unit_amount": int(float(total_price) * 100),
                 },
-            ],
+                "quantity": 1,
+            }],
             mode="payment",
-            success_url=request.build_absolute_uri(
-                reverse("payment-success") + f"?session_id={{CHECKOUT_SESSION_ID}}&id={rentdetails_id}"
-            ), 
+            success_url=request.build_absolute_uri(reverse("payment-success") + f"?id={rentdetails_id}"),
             cancel_url=request.build_absolute_uri(reverse("payment-failed")),
         )
-        return redirect(checkout_session.url)
+
+        # Since `redirect()` is synchronous, wrap it in `sync_to_async`
+        return await sync_to_async(redirect)(checkout_session.url)
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
-#update some details in db
-def user_success(request):
-    rentdetails_id = request.GET.get("id")  # Rentdetails entry ID
-    session_id = request.GET.get("session_id")  # Stripe Session ID
 
+# ✅ Async payment success
+async def user_success(request):
+    rentdetails_id = request.GET.get("id")
     try:
-        # Retrieve the Stripe session
-        session = stripe.checkout.Session.retrieve(session_id)
-        payment_intent_id = session.payment_intent  # Get the payment ID from Stripe
+        rentdetails = await Rentdetails.objects.aget(id=rentdetails_id)
+        home = await HomeDetails.objects.aget(id=rentdetails.p_id)
+        tenant = await CustomUser.objects.aget(id=rentdetails.u_id)
+        landlord = await CustomUser.objects.aget(id=home.lid_id)
 
-        # Retrieve the Rentdetails entry
-        rentdetails = Rentdetails.objects.get(id=rentdetails_id)
-        home = HomeDetails.objects.get(id=rentdetails.p_id)
-
-        # Update rentdetails as paid and save the payment ID
         rentdetails.pay_status = "paid"
-        rentdetails.payment_id = payment_intent_id  # Save Stripe Payment ID
-        rentdetails.save()
+        await sync_to_async(rentdetails.save)()
 
-        # Mark home as rented
         home.status = "rented"
-        home.save()
+        await sync_to_async(home.save)()
 
-    except Rentdetails.DoesNotExist:
-        return redirect("home")  # Redirect if ID is invalid
-    except stripe.error.StripeError as e:
-        return redirect("payment-failed")  # Handle Stripe errors
-    
-    return render(request, "tenant/success.html")
+        # Email Notifications
+        await send_email(
+            subject="🏡 Booking Confirmed | RentHome",
+            recipient_email=tenant.email,
+            context={
+                "name": tenant.name,
+                "message": "Your booking was successful!",
+                "message1": f"Your booking for {home.add}, {home.city} is confirmed. 🏡\nTotal Price: ₹{rentdetails.total_price}",
+                "message2": "Enjoy your stay! 😊",
+                "url": "http://127.0.0.1:8000/tenant/home/"
+            }
+        )
 
-def user_fail(request):
-    return render(request, "tenant/failed.html")
+        await send_email(
+            subject="🏡 Your Home Has Been Rented | RentHome",
+            recipient_email=landlord.email,
+            context={
+                "name": landlord.name,
+                "message": "Your home has been rented!",
+                "message1": f"Property at {home.add}, {home.city} rented by {tenant.name}. Total: ₹{rentdetails.total_price}",
+                "message2": "Thank you for listing with RentHome!",
+                "url": "http://127.0.0.1:8000/landlord/home/"
+            }
+        )
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return redirect("payment-failed")
+
+    return await sync_to_async(render)(request, "tenant/success.html")
+
+
+# ✅ Async payment failure
+async def user_fail(request):
+    return await sync_to_async(render)(request, "tenant/failed.html")
