@@ -9,22 +9,49 @@ import stripe
 from django.conf import settings
 from django.http import JsonResponse
 from apps.send_email.views import send_email
+from django.utils.timezone import now
 
 
-# ✅ Async tenant home
+@login_required
 async def tenant_home(request):
     user_id = await sync_to_async(lambda: request.user.id)()
-    auth_user =  await sync_to_async(lambda: request.user.is_authenticated)()
-    if not auth_user:
-        return redirect("home")
 
-    rented_home_ids = await sync_to_async(
-        lambda: list(Rentdetails.objects.filter(u_id=user_id, pay_status="paid").values_list("p_id", flat=True))
-    )()
-    
-    homedetails = await sync_to_async(lambda: list(HomeDetails.objects.filter(id__in=rented_home_ids, status="rented")))()
-    
-    return await sync_to_async(render)(request, "tenant/tenant_home.html", {"homedetails": homedetails})
+    # Fetch rented home details for the authenticated user
+    rented_homes = await sync_to_async(lambda: list(
+        Rentdetails.objects.filter(u_id=user_id, pay_status="paid")
+        .select_related("p")  # Optimize query by fetching related HomeDetails
+    ))()
+
+    home_data = []
+    today = now().date()  # Get current date
+    print(f"Today's Date: {today}")  # Debugging
+
+    for rent in rented_homes:
+        home = rent.p  # Related HomeDetails object
+
+        # ✅ Ensure both dates are `date` type
+        start_date = rent.start_date.date() if isinstance(rent.start_date, datetime) else rent.start_date
+        end_date = rent.end_date.date() if isinstance(rent.end_date, datetime) else rent.end_date
+
+        # Debugging
+        print(f"Start Date: {start_date}, End Date: {end_date}")
+
+        # ✅ Correct calculation of remaining days
+        remaining_days = (max((end_date - today).days, 0) ) + 1
+        print(f"Remaining Days: {remaining_days}")  # Debugging log
+
+        # Add necessary details to a dictionary
+        home_data.append({
+            "home": home,
+            "start_date": start_date,
+            "end_date": end_date,
+            "total_price": rent.total_price,
+            "remaining_days": remaining_days,
+        })
+
+    return await sync_to_async(render)(
+        request, "tenant/tenant_home.html", {"home_data": home_data}
+    )
 
 
 #search home
@@ -136,7 +163,8 @@ async def view_detail(request, pk):
 async def user_checkout(request):
     # ✅ Fetch user safely in an async view
     user_id = await sync_to_async(lambda: request.user.id)()
-    id = request.GET.get('id')
+
+    id = request.GET.get('id')  #home id
     startdate = request.GET.get("startdate")
     enddate = request.GET.get("enddate")
     totaldays = request.GET.get("totaldays")
@@ -153,12 +181,15 @@ async def user_checkout(request):
             end_date=enddate,
             total_days=totaldays,
             total_price=totalprice,
-            u_id=tenant.id,
+            u_id=user_id,
             p_id=id
         )
         await sync_to_async(rentdetails.save)()
 
-        return redirect(reverse("payment") + f"?id={id}&totalprice={totalprice}")
+        rentdetails= await Rentdetails.objects.aget(p_id =id)
+        rentdetails_id = rentdetails.id
+
+        return redirect(reverse("payment") + f"?id={rentdetails_id}&totalprice={totalprice}")
 
     return await sync_to_async(render)(request, "tenant/checkout.html", {
         "home": home,
