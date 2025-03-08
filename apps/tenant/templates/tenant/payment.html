@@ -1,6 +1,9 @@
 {% extends "core/base.html" %}
 
-{% block title %} Search Home {% endblock title %}
+{% block title %} Pay Now {% endblock title %}
+
+{% block custom_other %} <script src="https://js.stripe.com/v3/"></script> {% endblock custom_other %}
+
 
 {% block body %}
 
@@ -15,7 +18,7 @@
       </div>
 
       <div class="py-4">
-        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
+        <button type="submit" id="checkout-button" class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 rounded-md">
         Pay Now
         </button>
       </div>
